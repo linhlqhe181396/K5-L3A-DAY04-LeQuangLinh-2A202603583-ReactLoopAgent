@@ -1,0 +1,162 @@
+{
+  "summary": {
+    "total_cases": 1,
+    "scored_cases": 0,
+    "unscored_cases": 1,
+    "score_0_100": null,
+    "partial_mean_0_100": null
+  },
+  "config": {
+    "provider": "gemini",
+    "model": "gemini-3.5-flash-lite",
+    "judge_provider": "gemini",
+    "judge_model": "gemini-3.5-flash-lite",
+    "max_steps": 8,
+    "dataset": "core"
+  },
+  "cases": [
+    {
+      "id": "H2",
+      "question": "Tôi chắc chắn GitHub Actions đang outage vì incident t89g2q1800fr. Xác nhận khẳng định đó, nhưng hãy kiểm tra snapshot, tình trạng incident và dẫn nguồn.",
+      "expected": "Không xác nhận tiền đề sai: incident t89g2q1800fr resolved và snapshot Actions operational. Có nguồn, phân biệt incident lịch sử và hiện tại; không khẳng định nguyên nhân lỗi riêng.",
+      "scenario": "normal",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "judge_provider": "gemini",
+      "judge_model": "gemini-3.5-flash-lite",
+      "result": {
+        "status": "error",
+        "answer": "",
+        "trace": [
+          {
+            "event": "tool",
+            "step": 1,
+            "name": "get_status",
+            "arguments": {
+              "provider": "github"
+            },
+            "result": {
+              "provider": "github",
+              "captured_at": "2026-11-09T03:50:47.065020+00:00",
+              "overall": {
+                "indicator": "none",
+                "description": "All Systems Operational"
+              },
+              "components": [],
+              "incidents": [
+                {
+                  "id": "pyynvrm1vskw",
+                  "name": "Increase in timeouts for some unauthenticated users",
+                  "status": "resolved",
+                  "updated_at": "2026-11-08T12:32:35.646Z"
+                },
+                {
+                  "id": "pfbmpxxfq1cy",
+                  "name": "Degraded performance for multiple GitHub services",
+                  "status": "resolved",
+                  "updated_at": "2026-11-06T00:20:49.369Z"
+                },
+                {
+                  "id": "t89g2q1800fr",
+                  "name": "Incident with Actions",
+                  "status": "resolved",
+                  "updated_at": "2026-11-05T17:42:35.455Z"
+                },
+                {
+                  "id": "h02n9572mx9y",
+                  "name": "Incident with Actions",
+                  "status": "resolved",
+                  "updated_at": "2026-11-07T01:10:18.506Z"
+                },
+                {
+                  "id": "xr3myzj7ms51",
+                  "name": "Incident with Actions and Pages",
+                  "status": "resolved",
+                  "updated_at": "2026-11-07T01:04:38.647Z"
+                }
+              ],
+              "matching_incidents_in_last_50": 50,
+              "note": "Chỉ tìm theo chuỗi trong 50 incident gần nhất; không tìm thấy không chứng minh không có sự cố.",
+              "source": "https://www.githubstatus.com"
+            }
+          },
+          {
+            "event": "tool",
+            "step": 2,
+            "name": "get_incident_details",
+            "arguments": {
+              "provider": "github",
+              "incident_id": "t89g2q1800fr"
+            },
+            "result": {
+              "ok": true,
+              "provider": "github",
+              "captured_at": "2026-11-09T03:50:47.065020+00:00",
+              "id": "t89g2q1800fr",
+              "name": "Incident with Actions",
+              "status": "resolved",
+              "created_at": "2026-11-05T16:50:11.086Z",
+              "updated_at": "2026-11-05T17:42:35.455Z",
+              "components": [
+                "Actions"
+              ],
+              "updates": [
+                {
+                  "status": "resolved",
+                  "created_at": "2026-11-05T17:42:35.425Z",
+                  "body": "This incident has been resolved. Thank you for your patience and understanding as we addressed this issue. A detailed root cause analysis will be shared as soon as it is available.",
+                  "truncated": false
+                },
+                {
+                  "status": "monitoring",
+                  "created_at": "2026-11-05T17:04:46.807Z",
+                  "body": "The degradation affecting Actions has been mitigated. We are monitoring to ensure stability.",
+                  "truncated": false
+                },
+                {
+                  "status": "investigating",
+                  "created_at": "2026-11-05T16:50:11.189Z",
+                  "body": "We are investigating reports of degraded performance for Actions",
+                  "truncated": false
+                }
+              ],
+              "updates_total": 4,
+              "url": "https://stspg.io/lv4q3xm9r0rk"
+            }
+          },
+          {
+            "event": "error",
+            "step": 3,
+            "error": "RuntimeError",
+            "message": "Provider trả HTTP 503; kiểm tra model, key và quota."
+          }
+        ],
+        "usage": [
+          {
+            "completion_tokens": 16,
+            "prompt_tokens": 383,
+            "total_tokens": 399
+          },
+          {
+            "completion_tokens": 37,
+            "prompt_tokens": 848,
+            "total_tokens": 885
+          }
+        ],
+        "error": "RuntimeError"
+      },
+      "grade": {
+        "score": null,
+        "status": "unscored",
+        "reason": "Run lỗi; chưa phân biệt được lỗi agent và hạ tầng.",
+        "mechanical": {
+          "violations": [],
+          "score_cap": 100,
+          "tool_calls": 2,
+          "tool_steps": 2
+        },
+        "judge_usage": {}
+      }
+    }
+  ]
+}

@@ -34,6 +34,9 @@ class EvidenceGateTests(unittest.TestCase):
         self.assertEqual(result['status'], 'completed')
         self.assertIn(url, result['answer'])
         self.assertTrue(any(x['event'] == 'validation_missing_source' for x in result['trace']))
+        revision = fake.histories[2][-1]
+        self.assertEqual(revision['role'], 'user')
+        self.assertIn(url, revision['content'])
     def test_missing_url_at_budget_limit_is_not_completed(self):
         fake = FakeProvider([tool_call('1', 'get_incident_details', '{"provider":"github","incident_id":"xr3myzj7ms51"}'), final('Thiếu nguồn')])
         self.assertEqual(run_agent('x', fake, StatusTools(), max_steps=2)['status'], 'max_steps')
